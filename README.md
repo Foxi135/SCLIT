@@ -1,5 +1,5 @@
 # SCLIT
-after reading this comedy https://scratch.mit.edu/discuss/topic/655821/ ,<br />
+after reading this https://scratch.mit.edu/discuss/topic/655821/ ,<br />
 i decided to create something like this<br />
 but more usefull<br />
 windows only
