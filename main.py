@@ -17,26 +17,31 @@ if (action == "sui"):
             print(x["ID"])
     else:
         print("invalid argument: \""+sys.argv[2]+"\"")
+def log(text):
+    print(text)
 
 if (action == "download") or (action == "d"):
     id = sys.argv[2]
     x = json.loads((requests.get("https://api.scratch.mit.edu/projects/"+id)).text)
     x = x["project_token"]
     x = (requests.get("https://projects.scratch.mit.edu/"+id+"?token="+x)).text
-    dir = "project"+id
+    dir = sys.argv[3] or "project"+id
+    name = dir+".sb3"
     if not os.path.exists(dir):
         os.mkdir(dir)
         open(dir+"/project.json","w").write(x)
     x = json.loads(x)
     for w in x["targets"]:
         for v in w["costumes"]:
-            print(v)
             f = requests.get("http://cdn.scratch.mit.edu/internalapi/asset/"+v["md5ext"]+"/get/")
             open(dir+"/"+v["md5ext"],"wb").write(f.content)
             f = None
         for v in w["sounds"]:
-            print(v)
             f = requests.get("http://cdn.scratch.mit.edu/internalapi/asset/"+v["md5ext"]+"/get/")
             open(dir+"/"+v["md5ext"],"wb").write(f.content)
             f = None
-
+    file = zipfile.ZipFile(name,"w")
+    for i in os.listdir(dir):
+        file.write(dir+"/"+i)
+    file.close()
+    os.removedirs(dir)
