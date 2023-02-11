@@ -3,7 +3,7 @@ import os
 import requests
 import json
 import zipfile
-action = sys.argv[1]
+action = sys.argv[1].lower()
 if (action == "sui"):
     if (sys.argv[2] == "u")or(sys.argv[2] == "i"):
         if sys.argv[2] == "u":
